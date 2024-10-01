@@ -1,0 +1,146 @@
+.button-login {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 40px;
+  width: 20rem;
+  position: relative;
+  padding: 0 15px;
+  font-size: 14px;
+  text-transform: uppercase;
+  border: 0;
+  box-shadow: hsl(210deg 87% 36%) 0px 7px 0px 0px;
+  background-color: hsl(210deg 100% 44%);
+  border-radius: 12px;
+  overflow: hidden;
+  transition: 31ms cubic-bezier(0.5, 0.7, 0.4, 1);
+}
+
+.button-login:before {
+  content: attr(alt);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  position: absolute;
+  inset: 0;
+  font-size: 14px;
+  font-weight: bold;
+  color: white;
+  letter-spacing: 2px;
+  opacity: 1;
+}
+
+.button-login:active {
+  box-shadow: none;
+  transform: translateY(7px);
+  transition: 35ms cubic-bezier(0.5, 0.7, 0.4, 1);
+}
+
+.button-login:hover:before {
+  transition: all 0s;
+  transform: translateY(100%);
+  opacity: 0;
+}
+
+.button-login i {
+  color: white;
+  font-size: 14px;
+  font-weight: bold;
+  letter-spacing: 2px;
+  font-style: normal;
+  transition: all 2s ease;
+  transform: translateY(-20px);
+  opacity: 0;
+}
+
+.button-login:hover i {
+  transition: all 0.2s ease;
+  transform: translateY(0px);
+  opacity: 1;
+}
+
+.button-login:hover i:nth-child(1) {
+  transition-delay: 0.045s;
+}
+
+.button-login:hover i:nth-child(2) {
+  transition-delay: calc(0.045s * 2);
+}
+
+.button-login:hover i:nth-child(3) {
+  transition-delay: calc(0.045s * 3);
+}
+
+.button-login:hover i:nth-child(4) {
+  transition-delay: calc(0.045s * 4);
+}
+
+.button-login:hover i:nth-child(6) {
+  transition-delay: calc(0.045s * 5);
+}
+
+.button-login:hover i:nth-child(7) {
+  transition-delay: calc(0.045s * 6);
+}
+
+/* /button update */
+
+/* From Uiverse.io by gharsh11032000 */
+/* From Uiverse.io by eirikvold */
+.button-main {
+  font-family: inherit;
+  font-size: 14px;
+  background: linear-gradient(to bottom, #595fd1 0%, #66a6ff 100%);
+  color: white;
+  padding: 0.8em 10rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 25px;
+  box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.2);
+  transition: all 0.3s;
+}
+
+.button-main:hover {
+  transform: translateY(-3px);
+  box-shadow: 0px 8px 15px rgba(0, 0, 0, 0.3);
+}
+
+.button-main:active {
+  transform: scale(0.95);
+  box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.button-main span {
+  display: block;
+  margin-left: 0.4em;
+  transition: all 0.3s;
+}
+
+.button-main svg {
+  width: 18px;
+  height: 18px;
+  fill: white;
+  transition: all 0.3s;
+}
+
+.button-main .svg-wrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: rgba(255, 255, 255, 0.2);
+  margin-right: 0.5em;
+  transition: all 0.3s;
+}
+
+.button-main:hover .svg-wrapper {
+  background-color: rgba(255, 255, 255, 0.5);
+}
+
+.button-main:hover svg {
+  transform: rotate(45deg);
+}

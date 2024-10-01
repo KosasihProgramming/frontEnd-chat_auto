@@ -1,23 +1,38 @@
-import logo from './logo.svg';
-import './App.css';
-
+import logo from "./logo.svg";
+import "./App.css";
+import React from "react";
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Link,
+  Navigate,
+} from "react-router-dom";
+import Login from "./auth/auth";
+import Instructions from "./pages/instructions";
 function App() {
+  const isLogin = sessionStorage.getItem("isLogin") === "true";
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <Router>
+        {isLogin ? (
+          <>
+            <Routes>
+              {/* <Route path="/" element={<Login />} /> */}
+              <Route path="/instructions" element={<Instructions />} />
+              {/* <Route path="*" element={<Navigate to="/" />} /> */}
+            </Routes>
+          </>
+        ) : (
+          <>
+            <Routes>
+              <Route path="/" element={<Login />} />
+              <Route path="*" element={<Navigate to="/" />} />
+            </Routes>
+          </>
+        )}
+      </Router>
     </div>
   );
 }

@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import OpenAI from "openai";
 import axios from "axios";
 
+import Swal from "sweetalert2";
 function Instructions() {
   const [instructions, setInstructions] = useState("");
   const [name, setName] = useState("Kasih");
@@ -21,7 +22,7 @@ function Instructions() {
   const getAssistant = async (email) => {
     try {
       const response = await fetch(
-        `http://localhost:5009/assistant/get-data/${email}`
+        `https://apiassistant-mn76rlbdka-uc.a.run.app/assistant/get-data/${email}`
       );
       const assistantData = await response.json();
       console.log(assistantData.data);
@@ -40,7 +41,7 @@ function Instructions() {
   const getAssistantData = async (assistantId) => {
     try {
       const response = await fetch(
-        `http://localhost:5009/assistant/get-assistant/${assistantId}`
+        `https://apiassistant-mn76rlbdka-uc.a.run.app/assistant/get-assistant/${assistantId}`
       );
       const assistantData = await response.json();
       console.log(assistantData.data);
@@ -62,7 +63,7 @@ function Instructions() {
 
     try {
       const response = await fetch(
-        "http://localhost:5009/assistant/update-assistant",
+        "https://apiassistant-mn76rlbdka-uc.a.run.app/assistant/update-assistant",
         {
           method: "POST",
           headers: {
@@ -83,12 +84,22 @@ function Instructions() {
       if (response.ok) {
         console.log("Successfully updated assistant");
         setResponse(myUpdatedAssistant);
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Assistant updated successfully!",
+        });
       } else {
         throw new Error(myUpdatedAssistant.error);
       }
     } catch (error) {
       console.error("Error updating assistant:", error);
       setResponse({ error: error.message });
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: `Failed to update assistant: ${error.message}`,
+      });
     } finally {
       setLoading(false);
     }
@@ -101,15 +112,17 @@ function Instructions() {
   };
   return (
     <div>
-      <div className="w-full h-[100vh]  relative flex justify-center items-start ">
-        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
-          <path
-            fill="#595fd1"
-            fill-opacity="1"
-            d="M0,224L48,234.7C96,245,192,267,288,272C384,277,480,267,576,224C672,181,768,107,864,90.7C960,75,1056,117,1152,117.3C1248,117,1344,75,1392,53.3L1440,32L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
-          ></path>
-        </svg>
-        <div className="mt-[5rem] absolute z-[99] flex justify-start items-center gap-4 p-6 w-[70%] h-[85%] rounded-xl bg-white shadow-xl flex-col">
+      <div className="w-full h-[100vh]  relative flex justify-center items-start overflow-y-scroll ">
+        <div className="absolute  w-full h-full flex justify-start items-start z-[-9]">
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+            <path
+              fill="#595fd1"
+              fill-opacity="1"
+              d="M0,224L48,234.7C96,245,192,267,288,272C384,277,480,267,576,224C672,181,768,107,864,90.7C960,75,1056,117,1152,117.3C1248,117,1344,75,1392,53.3L1440,32L1440,0L1392,0C1344,0,1248,0,1152,0C1056,0,960,0,864,0C768,0,672,0,576,0C480,0,384,0,288,0C192,0,96,0,48,0L0,0Z"
+            ></path>
+          </svg>
+        </div>
+        <div className="mt-[5rem] z-[99] flex justify-start items-center gap-4 p-6 w-[70%] h-[105%] rounded-xl bg-white shadow-xl flex-col mb-10">
           <div className="w-full flex justify-between">
             <div className="w-[97%] flex justify-center items-center ">
               <h4 className="font-medium text-3xl ">AI Assistant {nama}</h4>

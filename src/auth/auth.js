@@ -5,6 +5,7 @@ import Swal from "sweetalert2";
 import { useNavigate } from "react-router-dom";
 import HeroArea from "../component/features/wave";
 import background from "../assets/bg2.jpg";
+
 function Login() {
   const [email, setEmail] = useState("");
   const [isLogin, setisLogin] = useState(false);
@@ -15,31 +16,48 @@ function Login() {
     e.preventDefault();
 
     try {
-      const res = await fetch("http://localhost:5009/auth", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          email,
-          pass: password,
-        }),
-      });
+      const res = await fetch(
+        "https://apiassistant-mn76rlbdka-uc.a.run.app/auth",
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            email,
+            pass: password,
+          }),
+        }
+      );
 
       const data = await res.json();
       if (res.ok && data.data) {
         // If login is successful, set sessionStorage values
         sessionStorage.setItem("isLogin", "true");
         sessionStorage.setItem("email", email);
-        window.location.href = "/instructions";
-        // setResponse(data);
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Authentication successful!",
+        }).then(() => {
+          window.location.href = "/instructions";
+        });
         console.log("Authentication successful:", data);
       } else {
+        Swal.fire({
+          icon: "error",
+          title: "Failed",
+          text: data.error || "Authentication failed.",
+        });
         console.log(data.error || "Authentication failed.");
       }
     } catch (err) {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "An error occurred. Please try again.",
+      });
       console.error("Error during authentication:", err);
-      console.log("An error occurred. Please try again.");
     }
   };
   return (

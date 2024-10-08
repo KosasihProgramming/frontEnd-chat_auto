@@ -5,8 +5,8 @@ import axios from "axios";
 import Swal from "sweetalert2";
 function Instructions() {
   const [instructions, setInstructions] = useState("");
-  const [name, setName] = useState("Kasih");
-  const [model, setModel] = useState("gpt-4o");
+  const [name, setName] = useState("");
+  const [model, setModel] = useState("gpt-4o-mini");
   const [response, setResponse] = useState(null);
   const [loading, setLoading] = useState(false);
   const [token, setToken] = useState("");
@@ -29,6 +29,7 @@ function Instructions() {
       if (response.ok) {
         console.log(" data:", assistantData);
         setNama(assistantData.data.nama_bisnis);
+        setName(assistantData.data.nama_admin);
         setAssistantId(assistantData.data.assistance_id);
         await getAssistantData(assistantData.data.assistance_id);
       } else {

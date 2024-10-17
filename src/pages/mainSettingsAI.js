@@ -203,6 +203,11 @@ function AISettings() {
     return `${formattedDate} (${time})`;
   }
 
+  const handleLogout = () => {
+    localStorage.removeItem("isLogin");
+    localStorage.removeItem("email");
+    window.location.href = "/";
+  };
   return (
     <div className="min-h-screen bg-indigo-500 flex flex-col items-center p-8">
       <div className="w-[80%]  bg-white rounded-lg shadow-md p-6">
@@ -316,6 +321,15 @@ function AISettings() {
                   >
                     Lihat Infomasi Lama
                   </Link>
+
+                  <button
+                    onClick={handleLogout}
+                    className={
+                      "w-[15rem] p-2 text-sm rounded-xl flex justify-center items-center bg-indigo-500 text-white  "
+                    }
+                  >
+                    Logout
+                  </button>
                 </div>
               </div>
 

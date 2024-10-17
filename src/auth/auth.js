@@ -40,7 +40,7 @@ function Login() {
           title: "Success",
           text: "Authentication successful!",
         }).then(() => {
-          window.location.href = "/instructions";
+          window.location.href = "/";
         });
         console.log("Authentication successful:", data);
       } else {

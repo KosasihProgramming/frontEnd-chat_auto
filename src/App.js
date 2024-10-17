@@ -10,6 +10,7 @@ import {
 } from "react-router-dom";
 import Login from "./auth/auth";
 import Instructions from "./pages/instructions";
+import AISettings from "./pages/mainSettingsAI";
 function App() {
   const isLogin = sessionStorage.getItem("isLogin") === "true";
 
@@ -21,6 +22,7 @@ function App() {
             <Routes>
               {/* <Route path="/" element={<Login />} /> */}
               <Route path="/instructions" element={<Instructions />} />
+              <Route path="/" element={<AISettings />} />
               {/* <Route path="*" element={<Navigate to="/" />} /> */}
             </Routes>
           </>

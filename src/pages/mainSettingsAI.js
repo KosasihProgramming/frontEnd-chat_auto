@@ -186,23 +186,21 @@ function AISettings() {
     }
   };
   function formatDateTime(dateString) {
-    const date = new Date(dateString);
+    // Pisahkan tanggal dan waktu dari string ISO
+    const [datePart, timePart] = dateString.split("T");
+
+    // Ambil jam dan menit saja dari bagian waktu (tanpa detik dan zona waktu)
+    const time = timePart.slice(0, 5); // Ambil "15:48" dari "15:48:44.000Z"
 
     // Format tanggal ke dalam format: 14 Januari 2024
+    const date = new Date(dateString);
     const formattedDate = new Intl.DateTimeFormat("id-ID", {
       day: "numeric",
       month: "long",
       year: "numeric",
     }).format(date);
 
-    // Format waktu ke dalam format: 12:00
-    const formattedTime = date.toLocaleTimeString("id-ID", {
-      hour: "2-digit",
-      minute: "2-digit",
-      hour12: false, // Menggunakan format 24 jam
-    });
-
-    return `${formattedDate} (${formattedTime})`;
+    return `${formattedDate} (${time})`;
   }
 
   return (

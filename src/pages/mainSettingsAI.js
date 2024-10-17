@@ -206,7 +206,7 @@ function AISettings() {
   }
 
   return (
-    <div className="min-h-screen bg-gray-50 flex flex-col items-center p-8">
+    <div className="min-h-screen bg-indigo-500 flex flex-col items-center p-8">
       <div className="w-[80%]  bg-white rounded-lg shadow-md p-6">
         {/* Title */}
         <h1 className="text-2xl font-semibold mb-4">AI Configuration </h1>

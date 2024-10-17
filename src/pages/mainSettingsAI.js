@@ -1,5 +1,6 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import Swal from "sweetalert2";
 
 function AISettings() {
@@ -21,12 +22,12 @@ function AISettings() {
   const [isData, setIsData] = useState(false);
   const [assistantId, setAssistantId] = useState(""); // Replace with your actual assistant ID
   const [nama, setNama] = useState(""); // Replace with your actual assistant ID
-  const email = sessionStorage.getItem("email");
+  const email = localStorage.getItem("email");
 
   const [activeTab, setActiveTab] = useState("general");
   const tabs = [
     { name: "General", key: "general" },
-    { name: "Knowledge Sources", key: "knowledge-sources" },
+    // { name: "Knowledge Sources", key: "knowledge-sources" },
   ];
 
   useEffect(() => {
@@ -298,7 +299,7 @@ function AISettings() {
                   ></textarea>
                 </div>
                 {/* Save Button */}
-                <div className="text-right">
+                <div className="flex flex-col justify-center gap-6 w-full items-center">
                   <button
                     class="button-main mt-5"
                     disabled={loading}
@@ -306,6 +307,17 @@ function AISettings() {
                   >
                     {loading ? "Updating..." : "Update Instructions"}
                   </button>
+
+                  <Link
+                    to={"/instructions"}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className={
+                      "w-[15rem] p-2 text-sm rounded-xl flex justify-center items-center bg-indigo-500 text-white  "
+                    }
+                  >
+                    Lihat Infomasi Lama
+                  </Link>
                 </div>
               </div>
 
@@ -329,7 +341,7 @@ function AISettings() {
               </div>
             </div>
           )}
-          {activeTab === "knowledge-sources" && (
+          {/* {activeTab === "knowledge-sources" && (
             <div className="transition duration-500 ease-in-out transform opacity-100 scale-100">
               <div className="mb-6">
                 <h3 className="font-semibold text-lg mb-2">
@@ -353,7 +365,7 @@ function AISettings() {
                 </button>
               </div>
             </div>
-          )}
+          )} */}
         </div>
       </div>
     </div>

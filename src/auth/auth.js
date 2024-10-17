@@ -32,9 +32,9 @@ function Login() {
 
       const data = await res.json();
       if (res.ok && data.data) {
-        // If login is successful, set sessionStorage values
-        sessionStorage.setItem("isLogin", "true");
-        sessionStorage.setItem("email", email);
+        // If login is successful, set localStorage values
+        localStorage.setItem("isLogin", "true");
+        localStorage.setItem("email", email);
         Swal.fire({
           icon: "success",
           title: "Success",

@@ -12,7 +12,7 @@ import Login from "./auth/auth";
 import Instructions from "./pages/instructions";
 import AISettings from "./pages/mainSettingsAI";
 function App() {
-  const isLogin = sessionStorage.getItem("isLogin") === "true";
+  const isLogin = localStorage.getItem("isLogin") === "true";
 
   return (
     <div className="App">

@@ -13,7 +13,7 @@ function Instructions() {
   const [assistantData, setAssistantData] = useState({});
   const [assistantId, setAssistantId] = useState(""); // Replace with your actual assistant ID
   const [nama, setNama] = useState(""); // Replace with your actual assistant ID
-  const email = sessionStorage.getItem("email");
+  const email = localStorage.getItem("email");
 
   useEffect(() => {
     getAssistant(email);
@@ -107,8 +107,8 @@ function Instructions() {
   };
 
   const handleLogout = () => {
-    sessionStorage.removeItem("isLogin");
-    sessionStorage.removeItem("email");
+    localStorage.removeItem("isLogin");
+    localStorage.removeItem("email");
     window.location.href = "/";
   };
   return (

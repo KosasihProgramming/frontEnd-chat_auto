@@ -184,7 +184,7 @@ const Conversation = () => {
           <div className="mt-4">
             {loading ? (
               <>
-                <div className="w-full h-full flex justify-center items-center flex-col gap-8">
+                <div className=" bg-white w-full h-full flex justify-center items-center flex-col gap-8">
                   <Loader />
                   <h4 className="text-base font-medium">Sedang Memuat Data</h4>
                 </div>
@@ -228,7 +228,7 @@ const Conversation = () => {
           <div className="flex-1 p-4  overflow-y-scroll ">
             {loading ? (
               <>
-                <div className="w-full h-full flex justify-center items-center flex-col gap-8">
+                <div className=" bg-white w-full h-full flex justify-center items-center flex-col gap-8">
                   <Loader />
                   <h4 className="text-base font-medium">{statusKet}</h4>
                 </div>

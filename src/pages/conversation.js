@@ -1,6 +1,7 @@
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
+import Loader from "../component/features/loader";
 
 const Conversation = () => {
   const [selectedChat, setSelectedChat] = useState(null);
@@ -11,6 +12,7 @@ const Conversation = () => {
   const [threadData, setThreadData] = useState([]);
   const [listMessage, setListMessage] = useState([]);
   const [threadId, setThreadId] = useState("");
+  const [statusKet, setStatusKet] = useState("Sedang Memuat Data");
   const [isData, setIsData] = useState(false);
   const [assistantId, setAssistantId] = useState(""); // Replace with your actual assistant ID
   const [message, setMessage] = useState(""); // Replace with your actual assistant ID
@@ -24,7 +26,7 @@ const Conversation = () => {
   const getAssistant = async (email) => {
     try {
       const response = await fetch(
-        `http://localhost:5009/assistant/get-data/${email}`
+        `https://apiassistant-mn76rlbdka-uc.a.run.app/assistant/get-data/${email}`
       );
       const assistantData = await response.json();
       console.log(assistantData.data);
@@ -46,7 +48,7 @@ const Conversation = () => {
     try {
       setLoading(true); // Set loading true sebelum request dimulai
       const response = await axios.get(
-        `http://localhost:5009/conversation/get-thread/${no_wa}`
+        `https://apiassistant-mn76rlbdka-uc.a.run.app/conversation/get-thread/${no_wa}`
       );
 
       console.log("Instructions:", response.data.data);
@@ -97,9 +99,10 @@ const Conversation = () => {
   };
 
   const getMessage = async (thread) => {
+    setStatusKet("Sedang Memuat Data");
     try {
       const response = await axios.get(
-        `http://localhost:5009/conversation/get-messages/${thread}`
+        `https://apiassistant-mn76rlbdka-uc.a.run.app/conversation/get-messages/${thread}`
       );
       console.log("message", response.data.data);
       const data = response.data.data;
@@ -119,7 +122,8 @@ const Conversation = () => {
   };
 
   const handleSendMessage = async () => {
-    setLoading(true)
+    setLoading(true);
+    setStatusKet("Sedang Mengirim Pesan");
     const data = {
       message: message,
       reply_to_message: `Chat Pelanggan : ${lastMessage}.\n\n Nama Pelanggan : ${selectedChat}\n\nNo Wa Pelanggan : ${no_pelanggan}\n\nNo Wa Admin : ${noAdmin}`,
@@ -178,25 +182,36 @@ const Conversation = () => {
             </button>
           </div>
           <div className="mt-4">
-            {threadData.map((contact, index) => (
-              <div
-                key={index}
-                onClick={() => {
-                  getMessage(contact.id);
-                  setSelectedChat(contact.name);
-                  setNoPelanggan(contact.number);
-                }}
-                className={`p-4 flex justify-between items-center cursor-pointer hover:bg-indigo-50 duration-300 ${
-                  selectedChat === contact.name ? "bg-indigo-50" : ""
-                }`}
-              >
-                <div>
-                  <h3 className="font-bold">{contact.name}</h3>
-                  <p className="text-gray-600 text-sm">{contact.number}</p>
+            {loading ? (
+              <>
+                <div className="w-full h-full flex justify-center items-center flex-col gap-8">
+                  <Loader />
+                  <h4 className="text-base font-medium">Sedang Memuat Data</h4>
                 </div>
-                <span>{contact.lastSeen}</span>
-              </div>
-            ))}
+              </>
+            ) : (
+              <>
+                {threadData.map((contact, index) => (
+                  <div
+                    key={index}
+                    onClick={() => {
+                      getMessage(contact.id);
+                      setSelectedChat(contact.name);
+                      setNoPelanggan(contact.number);
+                    }}
+                    className={`p-4 flex justify-between items-center cursor-pointer hover:bg-indigo-50 duration-300 ${
+                      selectedChat === contact.name ? "bg-indigo-50" : ""
+                    }`}
+                  >
+                    <div>
+                      <h3 className="font-bold">{contact.name}</h3>
+                      <p className="text-gray-600 text-sm">{contact.number}</p>
+                    </div>
+                    <span>{contact.lastSeen}</span>
+                  </div>
+                ))}
+              </>
+            )}
           </div>
         </div>
 
@@ -211,25 +226,36 @@ const Conversation = () => {
 
           {/* Messages */}
           <div className="flex-1 p-4  overflow-y-scroll ">
-            {listMessage.map((message, index) => (
-              <div
-                key={index}
-                className={`mb-4 ${
-                  message.fromMe === true ? "text-right" : "text-left  "
-                }`}
-              >
-                <p
-                  className={`inline-block p-2  rounded-lg w-[80%] ${
-                    message.fromMe === true
-                      ? "bg-indigo-500 text-white"
-                      : "bg-white text-black"
-                  }`}
-                >
-                  {message.text}
-                </p>
-                <div className="text-xs text-gray-500">{message.time}</div>
-              </div>
-            ))}
+            {loading ? (
+              <>
+                <div className="w-full h-full flex justify-center items-center flex-col gap-8">
+                  <Loader />
+                  <h4 className="text-base font-medium">{statusKet}</h4>
+                </div>
+              </>
+            ) : (
+              <>
+                {listMessage.map((message, index) => (
+                  <div
+                    key={index}
+                    className={`mb-4 ${
+                      message.fromMe === true ? "text-right" : "text-left  "
+                    }`}
+                  >
+                    <p
+                      className={`inline-block p-2  rounded-lg w-[80%] ${
+                        message.fromMe === true
+                          ? "bg-indigo-500 text-white"
+                          : "bg-white text-black"
+                      }`}
+                    >
+                      {message.text}
+                    </p>
+                    <div className="text-xs text-gray-500">{message.time}</div>
+                  </div>
+                ))}
+              </>
+            )}
           </div>
 
           {/* Input Area */}

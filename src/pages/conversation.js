@@ -174,14 +174,14 @@ const Conversation = () => {
     <div className="min-h-screen bg-indigo-500 flex  justify-center items-start p-8">
       <div className="w-[90%] flex justify-between items-start bg-white rounded-lg shadow-md p-6">
         {/* Sidebar */}
-        <div className="w-1/3 bg-white border-r rounded-xl border-gray-300 border-l border-l-slate-300 max-h-[62rem] overflow-y-scroll">
-          <div className="flex items-center rounded-tl-xl rounded-tr-xl justify-between p-4 bg-indigo-600 text-white">
+        <div className="w-1/3 bg-white border-r rounded-xl border-gray-300 border-l border-l-slate-300 ">
+          <div className="flex items-center rounded-tl-xl rounded-tr-xl justify-between p-2 bg-indigo-600 text-white">
             <h1 className="text-xl font-bold">Chats</h1>
             <button className="bg-white text-indigo-600 p-2 rounded-full">
               +
             </button>
           </div>
-          <div className="mt-4">
+          <div className="mt-4 max-h-[38rem] overflow-y-scroll">
             {loading ? (
               <>
                 <div className=" bg-white w-full h-full flex justify-center items-center flex-col gap-8">
@@ -204,10 +204,10 @@ const Conversation = () => {
                     }`}
                   >
                     <div>
-                      <h3 className="font-bold">{contact.name}</h3>
+                      <h3 className="font-medium">{contact.name}</h3>
                       <p className="text-gray-600 text-sm">{contact.number}</p>
                     </div>
-                    <span>{contact.lastSeen}</span>
+                    <span className="text-xs">{contact.lastSeen}</span>
                   </div>
                 ))}
               </>
@@ -216,10 +216,10 @@ const Conversation = () => {
         </div>
 
         {/* Chat Area */}
-        <div className="w-2/3 bg-indigo-200 h-[62rem] flex flex-col justify-end border-t border-t-slate-300 ">
+        <div className="w-2/3 bg-indigo-200 h-[42rem] flex flex-col justify-end border-t border-t-slate-300 ">
           {/* Header */}
-          <div className="p-4 py-5 border-b bg-white border-gray-300">
-            <h2 className="font-bold text-lg">
+          <div className="p-4 py-2 border-b bg-white border-gray-300">
+            <h2 className="font-medium text-base">
               {selectedChat || "Select a contact"}
             </h2>
           </div>

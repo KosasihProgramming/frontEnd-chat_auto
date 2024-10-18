@@ -210,17 +210,19 @@ function AISettings() {
   };
   return (
     <div className="min-h-screen bg-indigo-500 flex flex-col items-center p-8">
-      <div className="w-[80%]  bg-white rounded-lg shadow-md p-6">
+      <div className="w-[90%]  bg-white rounded-lg shadow-md p-6">
         {/* Title */}
-        <h1 className="text-2xl font-semibold mb-4">AI Configuration </h1>
-        <div className="transition duration-500 ease-in-out transform opacity-100 scale-100">
-          <div className="mb-8">
-            <h2 className="text-xl font-medium mb-2">{name} AI</h2>
-            <p className="text-gray-600 mb-4">Customer Service AI</p>
-            <p>
-              Last Trained:{" "}
-              {lastTrain !== "" ? formatDateTime(lastTrain) : "Not Trained"}
-            </p>
+        <div className="w-full flex justify-center items-center flex-col">
+          <h1 className="text-2xl font-semibold mb-4">AI Configuration </h1>
+          <div className="transition duration-500 ease-in-out transform opacity-100 scale-100 ">
+            <div className="mb-8 flex justify-center items-center flex-col">
+              <h2 className="text-xl font-medium mb-2">{name} AI</h2>
+              <p className="text-gray-600 mb-4">Customer Service AI</p>
+              <p>
+                Last Trained:{" "}
+                {lastTrain !== "" ? formatDateTime(lastTrain) : "Not Trained"}
+              </p>
+            </div>
           </div>
         </div>
         <div className="flex justify-around items-center border-b-2 border-grey-500 mt-4">
@@ -253,6 +255,19 @@ function AISettings() {
 
                 {/* Chatbot Behavior */}
                 <div className="mb-6">
+                  <h3 className="font-semibold text-lg mb-2">Nama Chatbot</h3>
+                  <p className="text-gray-600">
+                    Ini adalah Nama Chatbot Ai Anda
+                  </p>
+                  <input
+                    className="w-full p-2 mt-4 p-3 border border-indigo-500 rounded-lg focus:outline-none"
+                    value={name}
+                    onChange={(e) => {
+                      setNama(e.target.value);
+                    }}
+                  ></input>
+                </div>
+                <div className="mb-6">
                   <h3 className="font-semibold text-lg mb-2">
                     Chatbot Behavior
                   </h3>
@@ -268,7 +283,6 @@ function AISettings() {
                     }}
                   ></textarea>
                 </div>
-
                 {/* Welcome Message */}
                 <div className="mb-6">
                   <h3 className="font-semibold text-lg mb-2">

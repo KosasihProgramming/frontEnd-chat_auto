@@ -93,6 +93,41 @@ const Conversation = () => {
     }
   };
 
+  const groupMessagesByDate = (messages) => {
+    // Gunakan reduce untuk mengelompokkan pesan berdasarkan tanggal
+    const groupedMessages = messages.reduce((acc, message) => {
+      // Cek apakah sudah ada grup dengan tanggal yang sama
+      const existingGroup = acc.find(
+        (group) => group.tanggal === message.tanggal
+      );
+
+      if (existingGroup) {
+        // Jika ada, tambahkan pesan ke array data yang ada
+        existingGroup.data.push(message);
+      } else {
+        // Jika tidak ada, buat grup baru dengan properti tanggal dan array data
+        acc.push({
+          tanggal: message.tanggal,
+          data: [message],
+        });
+      }
+
+      return acc;
+    }, []);
+
+    // Sortir data di setiap grup berdasarkan jam
+    groupedMessages.forEach((group) => {
+      group.data.sort((a, b) => {
+        // Sortir berdasarkan jam secara ascending
+        return a.jam.localeCompare(b.jam);
+      });
+    });
+
+    // Kembalikan hasil akhir
+    return groupedMessages;
+  };
+
+  // Contoh penggunaan di dalam getMessage
   const getMessage = async (thread) => {
     setStatusKet("Sedang Memuat Data");
     try {
@@ -103,8 +138,11 @@ const Conversation = () => {
       const data = response.data.data;
 
       if (response.data.data) {
-        setListMessage(data);
+        // Kelompokkan pesan berdasarkan tanggal dan sortir berdasarkan jam
+        const groupedMessages = groupMessagesByDate(data);
+        setListMessage(groupedMessages);
         const last = data[data.length - 1];
+        console.log("grup", groupedMessages);
         setLastMessage(last.text);
         console.log(last, "Last");
       }
@@ -196,7 +234,32 @@ const Conversation = () => {
       return dateB - dateA;
     });
   };
+  const convertToIndonesianDate = (dateString) => {
+    // Pecah tanggal dari format DD/MM/YYYY
+    const [day, month, year] = dateString.split("/");
 
+    // Daftar nama bulan dalam bahasa Indonesia
+    const monthNames = [
+      "Januari",
+      "Februari",
+      "Maret",
+      "April",
+      "Mei",
+      "Juni",
+      "Juli",
+      "Agustus",
+      "September",
+      "Oktober",
+      "November",
+      "Desember",
+    ];
+
+    // Ambil nama bulan berdasarkan indeks bulan
+    const monthName = monthNames[parseInt(month) - 1];
+
+    // Bentuk tanggal baru dalam bahasa Indonesia
+    return `${day} ${monthName} ${year}`;
+  };
   return (
     <div className="min-h-screen bg-indigo-500 flex  justify-center items-start p-8">
       <div className="w-[90%] flex justify-between items-start bg-white rounded-lg shadow-md p-6">
@@ -263,22 +326,33 @@ const Conversation = () => {
             ) : (
               <>
                 {listMessage.map((message, index) => (
-                  <div
-                    key={index}
-                    className={`mb-4 ${
-                      message.fromMe === true ? "text-right" : "text-left  "
-                    }`}
-                  >
-                    <p
-                      className={`inline-block p-2  rounded-lg w-[80%] ${
-                        message.fromMe === true
-                          ? "bg-indigo-500 text-white"
-                          : "bg-white text-black"
-                      }`}
-                    >
-                      {message.text}
-                    </p>
-                    <div className="text-xs text-gray-500">{message.time}</div>
+                  <div className="w-full flex flex-col justify-start items-center gap-4">
+                    <div className="rounded-xl text-white text-sm font-normal p-2 px-8 bg-indigo-400">
+                      {convertToIndonesianDate(message.tanggal)}
+                    </div>
+                    <div className="w-full flex flex-col ">
+                      {message.data.map((item) => (
+                        <div
+                          key={index}
+                          className={`mb-4 ${
+                            item.fromMe === true ? "text-right" : "text-left  "
+                          }`}
+                        >
+                          <p
+                            className={`inline-block p-2  rounded-lg w-[80%] ${
+                              item.fromMe === true
+                                ? "bg-indigo-500 text-white"
+                                : "bg-white text-black"
+                            }`}
+                          >
+                            {item.text}
+                          </p>
+                          <div className="text-sm font-medium text-indigo-500 mt-4">
+                            {item.jam}
+                          </div>
+                        </div>
+                      ))}
+                    </div>
                   </div>
                 ))}
               </>

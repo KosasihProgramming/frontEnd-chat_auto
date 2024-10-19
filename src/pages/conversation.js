@@ -2,7 +2,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import Loader from "../component/features/loader";
-
+import dayjs from "dayjs";
 const Conversation = () => {
   const [selectedChat, setSelectedChat] = useState(null);
   const [noAdmin, setNoAdmin] = useState("");
@@ -55,28 +55,20 @@ const Conversation = () => {
       const data = response.data.data;
 
       const formatLastSeen = (lastSeen) => {
-        const lastSeenDate = new Date(lastSeen);
-        const today = new Date();
+        const lastSeenDate = dayjs(lastSeen);
+        const today = dayjs();
 
         // Cek apakah lastSeen adalah hari ini
-        const isToday =
-          lastSeenDate.getDate() === today.getDate() &&
-          lastSeenDate.getMonth() === today.getMonth() &&
-          lastSeenDate.getFullYear() === today.getFullYear();
+        const isToday = lastSeenDate.isSame(today, "day");
 
         if (isToday) {
-          // Tampilkan jam dan menit jika tanggalnya adalah hari ini dalam format Indonesia
-          return lastSeenDate.toLocaleTimeString("id-ID", {
-            hour: "2-digit",
-            minute: "2-digit",
-          });
+          // Pisahkan string dan ambil jam dan menit dari format ISO
+          const timeString = lastSeen.split("T")[1]; // Ambil bagian waktu dari string
+          const [hours, minutes] = timeString.split(":"); // Pisahkan jam dan menit
+          return `${hours}:${minutes}`; // Tampilkan jam dan menit
         } else {
           // Tampilkan tanggal dalam format Indonesia
-          return lastSeenDate.toLocaleDateString("id-ID", {
-            day: "2-digit",
-            month: "long",
-            year: "numeric",
-          });
+          return lastSeenDate.format("DD MMMM YYYY");
         }
       };
 
@@ -85,10 +77,13 @@ const Conversation = () => {
           id: item.threadid,
           name: item.name_customer,
           number: item.whatsapp_number,
+          timestamp: item.lastUpdates ?? item.timestamp,
           lastSeen: formatLastSeen(item.lastUpdates ?? item.timestamp),
         }));
-        setThreadData(newData);
-        console.log(newData);
+        const sortAData = sortByDatetimeDesc(newData);
+        setThreadData(sortAData);
+        setIsData(true);
+        console.log(sortAData);
       }
 
       setLoading(false); // Set loading false setelah request selesai
@@ -143,6 +138,7 @@ const Conversation = () => {
         }
       );
 
+      await handleUpdateThread();
       // Memeriksa jika status respons adalah 'success'
       if (response.data.status === "success") {
         Swal.fire({
@@ -169,6 +165,37 @@ const Conversation = () => {
       });
     }
   };
+  const handleUpdateThread = async () => {
+    try {
+      const response = await axios.post(
+        "http://localhost:5009/conversation/updateThread",
+        {
+          scan_number: noAdmin,
+          contact_name: no_pelanggan,
+        }
+      );
+
+      // Set the response message from the server
+      console.log(response.data.status);
+    } catch (error) {
+      if (error.response) {
+        // Jika ada error dari server, tampilkan pesan error
+        console.log(error.response.data.message);
+      } else {
+        console.log("Error: Could not update thread.");
+      }
+    }
+  };
+  const sortByDatetimeDesc = (dataArray) => {
+    return dataArray.sort((a, b) => {
+      // Konversi properti datetime ke timestamp menggunakan Date.parse()
+      const dateA = Date.parse(a.timestamp);
+      const dateB = Date.parse(b.timestamp);
+
+      // Sortir secara descending (terbesar ke terkecil)
+      return dateB - dateA;
+    });
+  };
 
   return (
     <div className="min-h-screen bg-indigo-500 flex  justify-center items-start p-8">
@@ -182,7 +209,7 @@ const Conversation = () => {
             </button>
           </div>
           <div className="mt-4 max-h-[38rem] overflow-y-scroll">
-            {loading ? (
+            {!isData ? (
               <>
                 <div className=" bg-white w-full h-full flex justify-center items-center flex-col gap-8">
                   <Loader />

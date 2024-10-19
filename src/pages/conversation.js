@@ -334,8 +334,10 @@ const Conversation = () => {
                       {message.data.map((item) => (
                         <div
                           key={index}
-                          className={`mb-4 ${
-                            item.fromMe === true ? "text-right" : "text-left  "
+                          className={`mb-4 flex flex-col justify-between ${
+                            item.fromMe === true
+                              ? "text-right items-end"
+                              : "text-left  items-start"
                           }`}
                         >
                           <p
@@ -347,7 +349,7 @@ const Conversation = () => {
                           >
                             {item.text}
                           </p>
-                          <div className="text-sm font-medium text-indigo-500 mt-4">
+                          <div className="text-xs font-medium text-indigo-500 mt-2 bg-white rounded-md flex justify-center items-center w-10 px-2 p-1">
                             {item.jam}
                           </div>
                         </div>

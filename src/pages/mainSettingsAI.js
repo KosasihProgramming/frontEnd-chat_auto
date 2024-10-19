@@ -142,7 +142,6 @@ function AISettings() {
     }
   };
 
-  
   const handleSubmit = async (e) => {
     e.preventDefault();
 
@@ -277,7 +276,7 @@ function AISettings() {
                     identitas AI-nya.
                   </p>
                   <textarea
-                    className="w-full h-40 mt-4 p-3 border border-indigo-500 rounded-lg focus:outline-none"
+                    className="w-full min-h-[20rem] mt-4 p-3 border border-indigo-500 rounded-lg focus:outline-none"
                     value={behavior}
                     onChange={(e) => {
                       setBehavior(e.target.value);
@@ -293,7 +292,7 @@ function AISettings() {
                     Pesan pertama yang akan dikirim AI kepada user.
                   </p>
                   <textarea
-                    className="w-full h-20 p-3 border border-indigo-500 rounded-lg focus:outline-none"
+                    className="w-full min-h-[15rem] p-3 border border-indigo-500 rounded-lg focus:outline-none"
                     value={startMessage}
                     onChange={(e) => {
                       setStartMessage(e.target.value);
@@ -309,7 +308,7 @@ function AISettings() {
                     user.
                   </p>
                   <textarea
-                    className="w-full h-20 p-3 border border-indigo-500 rounded-lg focus:outline-none"
+                    className="w-full min-h-[15rem] p-3 border border-indigo-500 rounded-lg focus:outline-none"
                     value={endMessage}
                     onChange={(e) => {
                       setEndMessage(e.target.value);
@@ -358,7 +357,7 @@ function AISettings() {
                     identitas AI-nya.
                   </p>
                   <textarea
-                    className="w-full h-[32rem] mt-4 p-3 border border-indigo-500 rounded-lg focus:outline-none"
+                    className="w-full min-h-[52rem] mt-4 p-3 border border-indigo-500 rounded-lg focus:outline-none"
                     value={knowledge}
                     onChange={(e) => {
                       setKnowledge(e.target.value);

@@ -52,12 +52,28 @@ const Navbar = () => {
                   </div>
                 </div>
 
-                <Link
-                  to="/contact"
-                  className="hover:bg-indigo-100 duration-300 px-3 py-2 rounded-md text-sm font-medium"
-                >
-                  Contact
-                </Link>
+                <div className="relative group">
+                  <button className="hover:bg-indigo-100 duration-300 px-3 py-2 rounded-md text-sm font-medium flex items-center">
+                    Settings
+                  </button>
+
+                  {/* Dropdown Menu */}
+                  <div className="absolute left-0 mt-2 w-48 bg-white rounded-md shadow-lg py-2 z-10 opacity-0 group-hover:opacity-100 group-hover:scale-100 transition-all duration-300 transform scale-95">
+                    <Link
+                      to="/ai-config"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-100 transition-colors"
+                    >
+                      AI Configuration
+                    </Link>
+                    <Link
+                      to="/device"
+                      className="block px-4 py-2 text-sm text-gray-700 hover:bg-indigo-100 transition-colors"
+                    >
+                      Device Settings
+                    </Link>
+                  </div>
+                </div>
+
                 <button
                   onClick={handleLogout}
                   className="hover:bg-indigo-100 duration-300 px-3 py-2 rounded-md text-sm font-medium"

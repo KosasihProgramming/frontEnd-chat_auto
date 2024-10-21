@@ -10,6 +10,7 @@ import Instructions from "./pages/instructions";
 import AISettings from "./pages/mainSettingsAI";
 import Navbar from "../src/component/navbar"; // Pastikan lokasi path sesuai
 import Conversation from "./pages/conversation";
+import Device from "./pages/device";
 
 function App() {
   const isLogin = localStorage.getItem("isLogin") === "true";
@@ -23,6 +24,7 @@ function App() {
           <>
             <Routes>
               <Route path="/instructions" element={<Instructions />} />
+              <Route path="/device" element={<Device />} />
               <Route path="/conversation" element={<Conversation />} />
               <Route path="/" element={<AISettings />} />
             </Routes>

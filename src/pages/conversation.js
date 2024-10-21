@@ -3,6 +3,8 @@ import React, { useEffect, useState } from "react";
 import Swal from "sweetalert2";
 import Loader from "../component/features/loader";
 import dayjs from "dayjs";
+import animationData from "../styles/animationSuccess.json";
+import Lottie from "react-lottie";
 const Conversation = () => {
   const [selectedChat, setSelectedChat] = useState(null);
   const [noAdmin, setNoAdmin] = useState("");
@@ -19,6 +21,11 @@ const Conversation = () => {
   const [lastMessage, setLastMessage] = useState(""); // Replace with your actual assistant ID
   const email = localStorage.getItem("email");
 
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: animationData,
+  };
   useEffect(() => {
     getAssistant(email);
   }, []);

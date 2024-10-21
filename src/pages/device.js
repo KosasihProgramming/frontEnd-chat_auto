@@ -92,7 +92,7 @@ const Device = () => {
         setApiKey(assistantData.data.api_wa);
         setLoading(false);
 
-        // fetchQRCode(assistantData.data.api_wa);
+        fetchQRCode(assistantData.data.api_wa);
       } else {
         throw new Error(assistantData.error);
       }

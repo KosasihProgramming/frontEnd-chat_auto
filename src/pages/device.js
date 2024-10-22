@@ -42,11 +42,9 @@ const Device = () => {
             data.results.qrString !== "-"
           ) {
             console.log(data.results.qrString);
-            alert("notnull");
 
             setQrCode(data.results.qrString); // Misal QR code ada di field qrCodeUrl
           } else {
-            alert("null");
             setQrCode(null);
           }
         }
